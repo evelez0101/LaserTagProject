@@ -28,7 +28,6 @@ void loop()
   // read the input pin
   
   button_test();
-
 }
 
 void button_test()
@@ -43,5 +42,4 @@ void button_test()
   {
     digitalWrite(LED_PIN, LOW);
   }
-
 }
