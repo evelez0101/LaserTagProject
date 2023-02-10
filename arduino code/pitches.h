@@ -1,6 +1,7 @@
 /*************************************************
 
- * Public Constants
+ Public Constants: notes with their respectiv 
+ values the speaker to use
 
  *************************************************/
 
