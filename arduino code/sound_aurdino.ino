@@ -7,7 +7,12 @@
   circuit:
 
   - 8 ohm speaker on digital pin 8
+*/
 
+/*
+
+  This file was originally created on 
+  
   created 21 Jan 2010
 
   modified 30 Aug 2011
@@ -17,11 +22,11 @@
   This example code is in the public domain.
 
   http://www.arduino.cc/en/Tutorial/Tone
+  
+  This example serves as a way to play sound from the speaker and could serve and the foundation 
+  for future implementation
 
 */
-
-
-
 
 
 #include "pitches.h"
@@ -38,10 +43,15 @@ int noteDurations[] = {
   4, 8, 8, 4, 4, 4, 4, 4
 };
 
-void setup() {
+void setup()
+{
+  // nothing unique   
+}
+
+void sing() 
+{
 
   // iterate over the notes of the melody:
-
   for (int thisNote = 0; thisNote < 8; thisNote++) {
 
     // to calculate the note duration, take one second divided by the note type.
@@ -68,6 +78,5 @@ void setup() {
 }
 
 void loop() {
-
   // no need to repeat the melody.
 }
