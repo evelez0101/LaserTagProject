@@ -5,7 +5,7 @@
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
 
 int AMMO = 90;
-String t = "Ammunition: " + AMMO;
+String t = "Ammunition: " + (String)AMMO;
 String r = "#### Reload ####";
 String b = "Health: ####### ";
 
@@ -41,5 +41,5 @@ void screen() // Need to implment dynamic screen fucntion later
 void shoot()
 {
   AMMO--;
-  t = "Ammunition: " + AMMO;
+  t = "Ammunition: " + (String)AMMO;
 }
