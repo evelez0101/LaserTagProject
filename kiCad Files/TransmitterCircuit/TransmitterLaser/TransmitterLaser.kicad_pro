@@ -33,9 +33,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.5,
-          "height": 0.85,
-          "width": 2.0
+          "drill": 0.762,
+          "height": 1.524,
+          "width": 1.524
         },
         "silk_line_width": 0.15,
         "silk_text_italic": false,
@@ -333,7 +333,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "LaserTag.kicad_pro",
+    "filename": "TransmitterLaser.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -367,7 +367,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "3dModel/LaserTag.step",
+      "step": "TransmitterLaser.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
@@ -412,7 +412,7 @@
   },
   "sheets": [
     [
-      "39f83ed6-212d-4859-a836-956c2d1973fd",
+      "0667e66c-e274-4a39-bccb-b5fd655b648f",
       ""
     ]
   ],
