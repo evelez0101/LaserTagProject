@@ -3,10 +3,12 @@
 #include <LiquidCrystal.h>
 #include "pitches.h"
 
-// Pin Set up 
+// Pin Numbers
 int Reciever = 9; 
 int Light = 13;
 int Buzzer = 6;
+
+// Buzzer Set Up 
 
 // notes in the melody:
 int melody[] = { NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4 };
@@ -22,7 +24,7 @@ int noteDurations[] = { 4, 8, 8, 4, 4, 4, 4, 4 };
 // Set Up 2 
 LiquidCrystal lcd(12,11,5,4,3,2);
 
-// Strings to Display
+// Strings to Display on LCD
 String top = "Player 1";
 String bottom = "Health: ";
 int health = 5;
@@ -30,10 +32,10 @@ int health = 5;
 
 void setup()
 {
-  // Real Use Case 
+  // Reciever Set Up
   pinMode(Reciever,INPUT);
     
-  // LED
+  // LED Pin 
   pinMode(Light,OUTPUT);
 
   // LCD Protocol 
@@ -42,7 +44,7 @@ void setup()
 
 void loop()
 {
-  // Updates and Displays 
+  // Updates and Displays on to LCD
   displayScreen();
 
   // Looks for Hit 
@@ -101,35 +103,35 @@ void displayScreen()
 
 }
 
-  void sound()
-  {
-      tone(Buzzer,261);    
-      // Waits some time to turn off
-      delay(200);
-      //Turns the buzzer off
-      noTone(Buzzer); 
-      tone(Buzzer,261);    
-      // Waits some time to turn off
-      delay(200);
-      //Turns the buzzer off
-      noTone(Buzzer); 
+void sound()
+{
+    tone(Buzzer,261);    
+    // Waits some time to turn off
+    delay(200);
+    //Turns the buzzer off
+    noTone(Buzzer); 
+    tone(Buzzer,261);    
+    // Waits some time to turn off
+    delay(200);
+    //Turns the buzzer off
+    noTone(Buzzer); 
       
-      // Different Melody to experiment with 
-        /*
-        tone(buzzer,293);             
-        delay(200);    
-        noTone(buzzer); 
-        // Sounds the buzzer at the frequency relative to the note E in Hz
-        tone(buzzer,329);      
-        delay(200);
-        noTone(buzzer);     
-        // Sounds the buzzer at the frequency relative to the note F in Hz
-        tone(buzzer,349);    
-        delay(200);    
-        noTone(buzzer); 
-        // Sounds the buzzer at the frequency relative to the note G in Hz
-        tone(buzzer,392);            
-        delay(200);
-        noTone(buzzer); 
-        */
-  }
+    // Different Melody to experiment with 
+   /*
+    tone(buzzer,293);             
+    delay(200);    
+    noTone(buzzer); 
+    // Sounds the buzzer at the frequency relative to the note E in Hz
+    tone(buzzer,329);      
+    delay(200);
+    noTone(buzzer);     
+    // Sounds the buzzer at the frequency relative to the note F in Hz
+    tone(buzzer,349);    
+    delay(200);    
+    noTone(buzzer); 
+    // Sounds the buzzer at the frequency relative to the note G in Hz
+    tone(buzzer,392);            
+    delay(200);
+    noTone(buzzer); 
+   */
+ }
