@@ -34,93 +34,132 @@
 #define BLYNK_TEMPLATE_NAME "Laser Tag"
 #define BLYNK_AUTH_TOKEN "rJzWtffKDatiPPb2EXNYqz4vK_XgDmJS"
 
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <BlynkSimpleEsp32.h>
-#include <LiquidCrystal.h>
-#include <ezButton.h>
 
-// Pin Set up (ESP 32 Set Up)
-int Reciever = 34; 
-int Light = 13;
-int Buzzer = 6;
+#include <LiquidCrystal.h>
+#include <ESP8266_Lib.h>
+#include <BlynkSimpleShieldEsp8266.h>
+
+// Pin Set up 
+
+
+// New Constant
+const double HIT = 950;
 
 // LCD Set Up
-const int rs = 19, en = 23, d4 = 18, d5 = 17, d6 = 16, d7 = 15;
+const int rs = 6, en = 7, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // Strings to Display
-String top = "Player 1";
+String top = "Soldier 2      ";
 String bottom = "Health: ";
 
-// Game Elements
-int health = 5;
-String name = "Player 1";
-ezButton hitSim(Reciever);
+int health = 0;
+String name = "Soldier 2";
+int score = 500; 
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
 char ssid[] = "Columbia University";
 char pass[] = "";
 
+// or Software Serial on Uno, Nano...
+#include <SoftwareSerial.h>
+SoftwareSerial EspSerial(2, 3); // RX, TX
+
+// Your ESP8266 baud rate:
+#define ESP8266_BAUD 9600
+
+ESP8266 wifi(&EspSerial);
+
 void setup()
 {
-  // Tester Button
-  hitSim.setDebounceTime(50);
-  
-  // LED (If we use)
-  pinMode(Light,OUTPUT);
-
   // LCD Protocol 
   lcd.begin(16, 2);
-  
+
   // Debug console
   Serial.begin(9600);
 
-  // Blynk Protocol
-  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+  delay(10);
+
+  // Set ESP8266 baud rate
+  EspSerial.begin(ESP8266_BAUD);
+  delay(10);
+
+  Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass);
 }
 
-// Sends Health Information to Blynk Server 
 void sendHealth()
 {
-  Blynk.virtualWrite(V1,health);
+  // Player 1
+  //Blynk.virtualWrite(V1,health);
+  //Blynk.virtualWrite(V5,score);
+
+  // Player 2
+  Blynk.virtualWrite(V9,health);
+  Blynk.virtualWrite(V6,score);
 }
 
 void loop()
 {
-  // Run the Blynk Scipt 
+  // Death Sequence or Game Over
+  if (health == 0)
+  {
+    delay(2000);
+    reset();
+  }
+
   Blynk.run();
   
   // Updates and Displays 
   displayScreen();
   
-  // Sends Player Name 
-  Blynk.virtualWrite(V2,name);
+  // Player 1
+  //Blynk.virtualWrite(V2,name);
+
+  // Player 2
+  Blynk.virtualWrite(V0,name);
   
-  // Looks for Hit 
-  actionListner();
-  
-  // Updates Health on Server Side 
   sendHealth();
+
+   // Looks for Hit 
+  if (health != 0)
+  {
+    actionListner();
+  }
 }
 
-// Looks for event and handles it 
+void reset()
+{   
+  // Display the death screen 
+  displayScreen();
+  sendHealth();
+
+  // Wait a couple of seconds 
+  delay(10000);
+  
+  // Score Health Reset 
+  score = 1000;  
+  health = 5;   
+}
+
 void actionListner()
 {
 
-  // Getting Hit (Simulation with Button)
-  hitSim.loop();
-  
-  if (hitSim.isPressed())
+  // Getting Hit
+  for(;;)
   {
-    // Decrement by 1 
-    health--;
+    if (sensor())
+    {
+      // Decrement by 1 
+      health--;
+      score -= 150; 
+      break;   
+    }
   }
+
 
 }
 
-// Updates LCD Screen
 void displayScreen()
 {
   // Death Screen 
@@ -140,7 +179,6 @@ void displayScreen()
     lcd.print(bottom + health);
 
   }
-  // Error Handling
   else
   {
     lcd.setCursor(0, 0);
@@ -150,4 +188,33 @@ void displayScreen()
 }
 
 
+bool sensor()
+{
+  delay(1000);
+  // read the input on analog pin 0:
+  long sensorValue;
 
+  // print out the value you read:
+
+  int count = 0;
+
+  while (true)
+  {
+    delay(50);
+    sensorValue = analogRead(A0);
+    
+    Serial.println(count);
+    Serial.println(sensorValue);
+
+    if (sensorValue >= HIT)
+    {
+      count++;
+
+      if (count > 3)
+      {
+        Serial.println("Hit Detected!");
+        return true;
+      }
+    }
+  }
+}
