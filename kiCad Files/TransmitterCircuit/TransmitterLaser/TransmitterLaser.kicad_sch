@@ -1078,7 +1078,7 @@
 
   (no_connect (at 234.95 101.092) (uuid 36ccdb06-f615-49df-9050-b89dead1f35a))
   (no_connect (at 234.95 106.172) (uuid a32aa04e-6284-48a8-83c1-0f7c558755a6))
-  (no_connect (at 250.19 103.632) (uuid a32aa04e-6284-48a8-83c1-0f7c558755a6))
+  (no_connect (at 250.19 103.632) (uuid a32aa04e-6284-48a8-83c1-0f7c558755a7))
 
   (wire (pts (xy 166.497 50.8) (xy 166.624 50.8))
     (stroke (width 0) (type default) (color 0 0 0 0))
@@ -1469,9 +1469,17 @@
     (uuid fea6867d-7af2-442f-8096-cbb51a82f838)
   )
 
+  (text "Transmitter Circuit\n" (at 186.563 190.627 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 01e6b1aa-29ca-4293-9766-856705ebd97f)
+  )
   (text "LOGIC FOR AMMO FUNC.\n" (at 206.375 19.558 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 59c75f55-0d0c-4cdd-986e-1780d8665a68)
+  )
+  (text "By Rosnel Leyva\n" (at 216.662 186.563 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 9f1c4189-0dd0-498f-bb98-3f3a9a3084d2)
   )
 
   (global_label "+5V" (shape input) (at 169.037 26.162 180) (fields_autoplaced)
@@ -1607,7 +1615,7 @@
     (property "Reference" "R2" (id 0) (at 58.039 69.9769 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "1.5k" (id 1) (at 58.039 72.5169 0)
+    (property "Value" "120" (id 1) (at 58.039 72.5169 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" (id 2) (at 53.975 71.247 90)
@@ -1825,7 +1833,7 @@
     (property "Reference" "R1" (id 0) (at 57.658 49.6569 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "1k" (id 1) (at 57.658 52.1969 0)
+    (property "Value" "100" (id 1) (at 57.658 52.1969 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" (id 2) (at 53.594 50.927 90)
@@ -2005,10 +2013,10 @@
       (reference "LD1") (unit 1) (value "PL450B") (footprint "OptoDevice:LaserDiode_TO38ICut-3")
     )
     (path "/ab081c8c-de9b-4711-b73f-6f39b550b93d"
-      (reference "R1") (unit 1) (value "1k") (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
+      (reference "R1") (unit 1) (value "100") (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
     )
     (path "/36ff31bc-7434-4f81-a2ef-85ae94f95350"
-      (reference "R2") (unit 1) (value "1.5k") (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
+      (reference "R2") (unit 1) (value "120") (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
     )
     (path "/5f24295e-d28f-4bf9-93d8-42f452b10d7f"
       (reference "R3") (unit 1) (value "1k") (footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
