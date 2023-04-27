@@ -32,29 +32,27 @@
 /* Fill in information from Blynk Device Info here */
 #define BLYNK_TEMPLATE_ID "TMPL29EhZmcUE"
 #define BLYNK_TEMPLATE_NAME "Laser Tag"
-#define BLYNK_AUTH_TOKEN "rJzWtffKDatiPPb2EXNYqz4vK_XgDmJS"
+#define BLYNK_AUTH_TOKEN "fopAbVat1pMHim9Gs81X4J0k1aPG1DXE"
 
 
 #include <LiquidCrystal.h>
 #include <ESP8266_Lib.h>
 #include <BlynkSimpleShieldEsp8266.h>
 
-// Pin Set up 
-
 
 // New Constant
-const double HIT = 950;
+const double HIT_CONSTANT = 4.2; 
 
 // LCD Set Up
 const int rs = 6, en = 7, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // Strings to Display
-String top = "Soldier 2      ";
+String top = "Soldier 1      ";
 String bottom = "Health: ";
 
 int health = 0;
-String name = "Soldier 2";
+String name = "Soldier 1";
 int score = 500; 
 
 // Your WiFi credentials.
@@ -75,10 +73,10 @@ void setup()
 {
   // LCD Protocol 
   lcd.begin(16, 2);
+  displayScreen();
 
   // Debug console
   Serial.begin(9600);
-
   delay(10);
 
   // Set ESP8266 baud rate
@@ -88,55 +86,55 @@ void setup()
   Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass);
 }
 
-void sendHealth()
+void sendInfo()
 {
-  // Player 1
-  //Blynk.virtualWrite(V1,health);
-  //Blynk.virtualWrite(V5,score);
-
+  
+  //Player 1
+  Blynk.virtualWrite(V1,health);
+  Blynk.virtualWrite(V5,score);
+  Blynk.virtualWrite(V2,name);
+  
+  /*
   // Player 2
   Blynk.virtualWrite(V9,health);
   Blynk.virtualWrite(V6,score);
+  Blynk.virtualWrite(V0,name);
+  */
 }
 
 void loop()
 {
-  // Death Sequence or Game Over
   if (health == 0)
   {
-    delay(2000);
+    // Reset the Game
     reset();
   }
 
   Blynk.run();
-  
+
   // Updates and Displays 
   displayScreen();
   
-  // Player 1
-  //Blynk.virtualWrite(V2,name);
-
-  // Player 2
-  Blynk.virtualWrite(V0,name);
-  
-  sendHealth();
+  // Sends Info to Blynk
+  sendInfo();
 
    // Looks for Hit 
   if (health != 0)
   {
     actionListner();
   }
+
 }
 
 void reset()
 {   
-  // Display the death screen 
+  // Display the death screen and sends info 
   displayScreen();
-  sendHealth();
+  sendInfo();
 
-  // Wait a couple of seconds 
+  // Wait 10 seconds 
   delay(10000);
-  
+
   // Score Health Reset 
   score = 1000;  
   health = 5;   
@@ -145,7 +143,7 @@ void reset()
 void actionListner()
 {
 
-  // Getting Hit
+  // Infinite Loop
   for(;;)
   {
     if (sensor())
@@ -156,7 +154,6 @@ void actionListner()
       break;   
     }
   }
-
 
 }
 
@@ -187,34 +184,22 @@ void displayScreen()
 
 }
 
-
 bool sensor()
 {
-  delay(1000);
-  // read the input on analog pin 0:
-  long sensorValue;
+  // Value of A0 (Analoge Pin)
+  long sensorValue = analogRead(A0); 
 
-  // print out the value you read:
-
-  int count = 0;
-
-  while (true)
+  double voltage = sensorValue * (5.0 / 1023.0); 
+  
+  // If the Constant is exceeded then its a hit
+  if(voltage >= HIT_CONSTANT)
   {
-    delay(50);
-    sensorValue = analogRead(A0);
-    
-    Serial.println(count);
-    Serial.println(sensorValue);
-
-    if (sensorValue >= HIT)
-    {
-      count++;
-
-      if (count > 3)
-      {
-        Serial.println("Hit Detected!");
-        return true;
-      }
-    }
+    delay(1000);
+    return true;
   }
+  else 
+  {
+    return false;
+  }
+
 }
