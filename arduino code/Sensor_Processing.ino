@@ -1,58 +1,36 @@
-// Consants
-const double HIT = 1005;
+float HIT_CONSTANT = 2.2; 
+
+// LCD Set Up
+#include <LiquidCrystal.h>
+
+const int rs = 6, en = 7, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 void setup() {
-  pinMode(7,INPUT);
-  Serial.begin(9600); // open the serial port at 9600 bps:
   // put your setup code here, to run once:
+  lcd.begin(16, 2);
+
+  Serial.begin(9600); 
+  lcd.setCursor(0, 0);
+  lcd.print("Hello World!");
 
 }
 
-// the loop routine runs over and over again forever:
-void loop() 
-{
-  analog();
-}
+void loop() {
+  
+  int sensorValue = analogRead(A0); 
 
+  float voltage = sensorValue * (5.0 / 1023.0); 
+  Serial.println(voltage);
 
-void digital()
-{
-  if (digitalRead(7) == HIGH)
-  {
-    Serial.println("Hit Detected!");
-  }
-}
-
-void analog()
-{
+  if(voltage >= 4.2){
+  Serial.println("Hit detected");
+  lcd.setCursor(0, 0);
+  lcd.print("Hit detected!");
   delay(1000);
+  lcd.setCursor(0, 0);
+  lcd.print("                       ");
   
-  // read the input on analog pin 0:
-  long sensorValue = 0;
-  
-  // 4.9 is the hit constant in lab envoirnment 
-  int count = 0;
-  while (true)
-  {
-    delay(50);
-    sensorValue = analogRead(A0);
-    Serial.println(count);
-
-    if (sensorValue >= HIT)
-    {
-      count++;
-
-      if (count > 3)
-      {
-        Serial.println("Hit Detected!");
-        break;
-      }
-    }
-    else
-    {
-      //Serial.println("No");
-    }
-  }
-
+}
 
 }
